@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: slk
- * Date: 11/21/17
- * Time: 10:57 AM
- */
 
 namespace Grochowski\StepZone\Test;
 
