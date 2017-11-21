@@ -1,11 +1,16 @@
 {
-    "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "phpunit/phpunit": "^6.4"
-    },
-    "autoload": {
-        "psr-4": {
-            "Grochowski\\StepZone\\": "src/"
-        }
+  "require": {
+    "guzzlehttp/guzzle": "^6.3",
+    "phpunit/phpunit": "^6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Grochowski\\StepZone\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Grochowski\\StepZone\\Test\\": "tests/"
+    }
+  }
 }
