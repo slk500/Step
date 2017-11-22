@@ -8,7 +8,9 @@ interface BaseClientInterface
 {
     public function __construct(ClientInterface $client);
 
-    public function get($params): void;
+    public function get(array $params): void;
 
-    public function getResponse(): array;
+    public function getBodyContent(): array;
+
+    public function getStatusCode(): int;
 }

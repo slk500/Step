@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% if "OK" == geocodingClient.getStatus() %}
+    <span>Currently ISS is over Kgalagadi North District, Botswana </span> {{ geocodingClient.getAddress() }}
+{% else %}
+    <span>Sorry, something went wrong. Try to refresh a site. Error status: </span>  {{ geocodingClient.getStatus() }}
+{% endif %}
+
+</body>
+</html>

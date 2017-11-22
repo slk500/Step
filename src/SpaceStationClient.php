@@ -17,22 +17,27 @@ final class SpaceStationClient implements BaseClientInterface
      */
     private $psrResponse;
 
-    public function __construct(ClientInterface $baseClient)
+    public function __construct(ClientInterface $client)
     {
-        $this->client = $baseClient;
+        $this->client = $client;
     }
 
     public function getCoordinates(): array
     {
-        return $this->getResponse();
+        $bodyContent = $this->getBodyContent();
+
+        return [
+            'latitude' => $bodyContent['latitude'],
+            'longitude' => $bodyContent['longitude']
+            ];
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $this->get(['id' => $id]);
     }
 
-    public function get($params): void
+    public function get(array $params = null): void
     {
         $this->psrResponse = $this->client->request('GET', getenv('URL_WHERETHEISS'), [
                 'query' => $params
@@ -40,9 +45,9 @@ final class SpaceStationClient implements BaseClientInterface
         );
     }
 
-    public function getResponse(): array
+    public function getBodyContent(): array
     {
-        return json_decode($this->psrResponse->getBody()->getContents(), true);
+        return json_decode((string) $this->psrResponse->getBody()->getContents(), true);
     }
 
     public function getStatusCode(): int

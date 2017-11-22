@@ -1,15 +1,21 @@
 <?php
 
-use Symfony\Component\Dotenv\Dotenv;
+use Grochowski\StepZone\GeocodingClient;
+use Grochowski\StepZone\SpaceStationClient;
+use GuzzleHttp\Client as GuzzleClient;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../bootstrap.php';
 
-$dotenv = new Dotenv();
-$dotenv->load(__DIR__ .'/../.env');
+$spaceStationClient = new SpaceStationClient(new GuzzleClient());
+$spaceStationClient->show(25544);
+$coordinates = $spaceStationClient->getCoordinates();
 
-$m = getenv('URL_WHERETHEISS');
+$geocodingClient = new GeocodingClient(new GuzzleClient());
+$geocodingClient->translateCoordinates($coordinates['latitude'], $coordinates['longitude']);
 
-echo 'siema';
+echo $template->render([
+   'geocodingClient' => $geocodingClient
+]);
 
-echo 'dddd';
 

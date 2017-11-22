@@ -6,7 +6,6 @@ use GuzzleHttp\ClientInterface;
 
 final class GeocodingClient implements BaseClientInterface
 {
-    private const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
 
     /**
      * @var ClientInterface
@@ -20,21 +19,25 @@ final class GeocodingClient implements BaseClientInterface
 
     public function __construct(ClientInterface $client)
     {
-
         $this->client = $client;
     }
 
-    public function get($params): void
+    public function get(array $params = null): void
     {
-        $this->psrResponse = $this->client->request('GET', static::BASE_URL, [
+        $this->psrResponse = $this->client->request('GET', getenv('URL_GEOCODE'), [
                 'query' => $params
             ]
         );
     }
 
-    public function getResponse(): array
+    public function getStatusCode(): int
     {
-        return json_decode($this->psrResponse->getBody()->getContents(), true);
+        return $this->psrResponse->getStatusCode();
+    }
+
+    public function getBodyContent(): array
+    {
+        return json_decode((string) $this->psrResponse->getBody(), true);
     }
 
     public function translateCoordinates(float $latitude, float $longitude): void
@@ -44,6 +47,11 @@ final class GeocodingClient implements BaseClientInterface
 
     public function getAddress(): string
     {
-        return $this->getResponse()['results']['0']['formatted_address'];
+        return $this->getBodyContent()['results']['0']['formatted_address'];
+    }
+
+    public function getStatus(): string
+    {
+        return $this->getBodyContent()['status'];
     }
 }
