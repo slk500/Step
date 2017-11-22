@@ -2,7 +2,7 @@
 
 namespace Grochowski\StepZone\Test;
 
-use Grochowski\StepZone\lib\GeocodingClient;
+use Grochowski\StepZone\GeocodingClient;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client as GuzzleClient;
 

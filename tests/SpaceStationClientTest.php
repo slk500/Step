@@ -2,9 +2,15 @@
 
 namespace Grochowski\StepZone\Test;
 
-use Grochowski\StepZone\lib\SpaceStationClient;
+use Grochowski\StepZone\SpaceStationClient;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client as GuzzleClient;
+use Symfony\Component\Dotenv\Dotenv;
 
 class SpaceStationClientTest extends TestCase
 {
@@ -13,17 +19,35 @@ class SpaceStationClientTest extends TestCase
      */
     private $client;
 
+    /**
+     * @var GuzzleClient
+     */
+    private $guzzle;
+
     public function setUp()
     {
-        $this->client = new SpaceStationClient(new GuzzleClient());
-        $this->client->show(25544);
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__ .'/../.env');
+
+        $mock = new MockHandler([
+            new Response(200, ['X-Foo' => 'Bar']),
+        ]);
+
+        $handler = HandlerStack::create($mock);
+
+        $this->client = new SpaceStationClient(new GuzzleClient(['handler' => $handler]));
+
+        $this->guzzle = new GuzzleClient(['handler' => $handler]);
+
     }
 
-    public function testGetCoordinates()
+    public function testOne()
     {
-        $result = $this->client->getCoordinates();
 
-        $this->assertArrayHasKey('latitude', $result);
-        $this->assertArrayHasKey('longitude', $result);
+        $this->assertSame(200, $this->guzzle->request('GET', '/')->getStatusCode());
+
+        $this->assertSame(200, $this->client->getStatusCode());
+
     }
+
 }

@@ -12,5 +12,8 @@
     "psr-4": {
       "Grochowski\\StepZone\\Test\\": "tests/"
     }
+  },
+  "require-dev": {
+    "symfony/dotenv": "^3.3"
   }
 }

@@ -1,0 +1,13 @@
+Access-Control-Allow-Origin *
+Cache-Control max-age=0, no-cache
+Connection Keep-Alive
+Content-Length 311
+Content-Type application/json
+Date Sun, 19 Nov 2017 22:08:35 GMT
+Keep-Alive timeout=15, max=100
+Server Apache/2.2.22 (Ubuntu)
+X-Apache-Time D=21128
+X-Powered-By PHP/5.3.10-1ubuntu3.26
+X-Rate-Limit-Interval 5 minutes
+X-Rate-Limit-Limit 350
+X-Rate-Limit-Remaining 347
