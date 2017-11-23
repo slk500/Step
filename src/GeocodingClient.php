@@ -29,16 +29,16 @@ final class GeocodingClient implements BaseClientInterface
     }
 
 
-    public function getTranslatedCoordinates(): ?string
+    public function getTranslatedCoordinates(): string
     {
         $body = $this->getBodyContent();
 
         if(!array_key_exists('result', $body))
         {
-           return null;
+           return '';
         }
 
-        return ['results']['0']['formatted_address'];
+        return $body['results']['0']['formatted_address'];
     }
 
     public function sendRequestWithCoordinates(array $coordinates): void
