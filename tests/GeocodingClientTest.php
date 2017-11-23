@@ -2,6 +2,7 @@
 
 namespace Grochowski\StepZone\Test;
 
+use Grochowski\StepZone\Config;
 use Grochowski\StepZone\GeocodingClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -26,9 +27,14 @@ class GeocodingClientTest extends TestCase
 
         $handler = HandlerStack::create($mock);
 
-        $this->client = new GeocodingClient(new GuzzleClient(['handler' => $handler]));
+        $config = new Config(require __DIR__.'/../config/config.php');
 
-        $this->client->translateCoordinates(43.879779401917,81.49973228524);
+        $this->client = new GeocodingClient(new GuzzleClient(['handler' => $handler]), $config);
+
+        $this->client->sendRequestWithCoordinates([
+            'latitude' => 43.879779401917,
+            'longitude' => 81.49973228524
+        ]);
     }
 
     public function testGetStatusCode()
@@ -39,7 +45,7 @@ class GeocodingClientTest extends TestCase
     public function testGetAddress()
     {
         $this->assertSame('Unnamed Road, Yining Xian, Yili Hasakezizhizhou, Xinjiang Weiwuerzizhiqu, China',
-            $this->client->getAddress());
+            $this->client->getTranslatedCoordinates());
     }
 
     public function testGetStatus()

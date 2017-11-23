@@ -6,10 +6,10 @@
 </head>
 <body>
 
-{% if "OK" == geocodingClient.getStatus() %}
-    <span>Currently ISS is over Kgalagadi North District, Botswana </span> {{ geocodingClient.getAddress() }}
+{% if "OK" == status %}
+    <span>Currently ISS is over Kgalagadi North District, Botswana </span> {{ address }}
 {% else %}
-    <span>Sorry, something went wrong. Try to refresh a site. Error status: </span>  {{ geocodingClient.getStatus() }}
+    <span>Sorry, something went wrong. Try to refresh a site. Error status: </span>  {{ status }}
 {% endif %}
 
 </body>

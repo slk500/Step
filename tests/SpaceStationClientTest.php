@@ -2,6 +2,7 @@
 
 namespace Grochowski\StepZone\Test;
 
+use Grochowski\StepZone\Config;
 use Grochowski\StepZone\SpaceStationClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -26,9 +27,13 @@ class SpaceStationClientTest extends TestCase
 
         $handler = HandlerStack::create($mock);
 
-        $this->client = new SpaceStationClient(new GuzzleClient(['handler' => $handler]));
+        $config = new Config(require __DIR__.'/../config/config.php');
 
-        $this->client->show(2544);
+        $this->client = new SpaceStationClient(new GuzzleClient(['handler' => $handler]), $config);
+
+        $issSatelliteId = 25544;
+
+        $this->client->sendRequestWithId($issSatelliteId);
     }
 
     public function testGetStatusCode()

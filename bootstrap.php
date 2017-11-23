@@ -1,9 +1,13 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 use Symfony\Component\Dotenv\Dotenv;
 
-$dotenv = new Dotenv();
-$dotenv->load(__DIR__ .'/.env');
+$envFile = __DIR__ .'/.env';
+if (file_exists($envFile)) {
+    (new Dotenv)->load($envFile);
+}
 
 $loader = new Twig_Loader_Filesystem(__DIR__ . '/templates');
 $twig = new Twig_Environment($loader);

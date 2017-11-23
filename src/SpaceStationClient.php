@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Grochowski\StepZone;
 
 use GuzzleHttp\ClientInterface;
-
 
 final class SpaceStationClient implements BaseClientInterface
 {
@@ -17,10 +16,17 @@ final class SpaceStationClient implements BaseClientInterface
      */
     private $psrResponse;
 
-    public function __construct(ClientInterface $client)
+    /**
+     * @var string
+     */
+    private $url;
+
+    public function __construct(ClientInterface $client, Config $config)
     {
         $this->client = $client;
+        $this->url = $config->get('url_space_station');
     }
+
 
     public function getCoordinates(): array
     {
@@ -32,14 +38,15 @@ final class SpaceStationClient implements BaseClientInterface
             ];
     }
 
-    public function show(int $id)
+    public function sendRequestWithId(int $id): void
     {
-        $this->get(['id' => $id]);
+        $this->sendRequest(['id' => $id]);
     }
 
-    public function get(array $params = null): void
+
+    public function sendRequest(array $params = null): void
     {
-        $this->psrResponse = $this->client->request('GET', getenv('URL_WHERETHEISS'), [
+        $this->psrResponse = $this->client->request('GET', $this->url, [
                 'query' => $params
             ]
         );

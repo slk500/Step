@@ -11,3 +11,17 @@ Remarks:
 * OOP and MVC (or similar pattern) is encouraged
 
 * Please write tests and implement at least one design pattern (please explain why you chose particular pattern and what are pros and cons of his choice)
+
+Implemented design pattern - Dependency Injection:
+
+ pros:
+- decreases coupling between a class and its dependency
+- it's easier to test classes
+- centralize configuration for app
+- encapsulation
+- all dependencies are visible at initialization of object
+
+cons:
+- more boilerplate code
+
+I have chosen DI because it's fundamental pattern to write solid, clean code and use TTD. 
